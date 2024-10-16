@@ -16,10 +16,10 @@ def show_performance(y_true, y_pred):
     ax.plot(y_true.values, color='tab:blue')
     ax.plot(y_pred, color='tab:red')
 
-def plot(data):
+def plot(data, color="tab:red"):
     fig, ax = plt.subplots(figsize=(16, 5))
     fig.autofmt_xdate()
-    ax.plot(data)
+    ax.plot(data, color=color)
     ax.legend()
     ax.grid()
 
