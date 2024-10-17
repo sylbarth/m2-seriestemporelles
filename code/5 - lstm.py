@@ -24,9 +24,6 @@ for t in range(len(data) - T):
 X = np.array(X).reshape(-1, T, 1)
 y = np.array(y)
 N = len(X)
-N_TRAIN = N/2
-print(N_TRAIN)
-exit(1)
 
 print("X.shape", X.shape, "y.shape", y.shape)
 print(X)
