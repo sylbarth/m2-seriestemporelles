@@ -14,6 +14,7 @@ from sklearn.metrics import mean_squared_error
 
 SEQ_LENGTH = 5
 FORECAST_HORIZON = 1
+EPOCHS = 500
 
 np.random.seed(1)
 tf.random.set_seed(1)
@@ -59,19 +60,19 @@ def build_cnn_model(input_shape, forecast_horizon: int):
 
 # # train du modèle sur 20 epochs
 model = build_cnn_model((SEQ_LENGTH, X.shape[2]), FORECAST_HORIZON)
-early_stopping = EarlyStopping(patience=10, restore_best_weights=True)
+early_stopping = EarlyStopping(monitor='val_loss', patience=10, restore_best_weights=True)
 
-r = model.fit(
+history = model.fit(
     X_train, y_train,
-    epochs=50,
+    epochs=EPOCHS,
     batch_size=32,
     validation_split=0.2,
     callbacks=[early_stopping],
     verbose=1
 )
 
-plt.plot(r.history["loss"], label="loss")
-plt.plot(r.history["val_loss"], label="val_loss")
+plt.plot(history.history["loss"], label="loss")
+plt.plot(history.history["val_loss"], label="val_loss")
 plt.legend()
 plt.show()
 
@@ -82,7 +83,7 @@ yhat = yhat[:,0]
 print("MSE", mean_squared_error(y_test, yhat))
 
 plt.plot(y_test, label="y")
-plt.plot(yhat, label="yhat")
+plt.plot(yhat, label="yhat", color="orange")
 plt.title("CNN Predictions")
 plt.legend()
 plt.show()
